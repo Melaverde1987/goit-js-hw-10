@@ -1,22 +1,47 @@
 import axios from 'axios';
+import { fetchBreeds, fetchCatByBreed } from './cat-api';
+
 axios.defaults.headers.common['x-api-key'] =
   'live_maob73XQNST9k0E0qcYB5rumD7MyvNnpZXqqaHnME5AqsJSKmgk7yDm4Yo3HmZXZ';
 
-const breed = document.querySelector('.breed-select');
+const select = document.querySelector('.breed-select');
+const info = document.querySelector('.cat-info');
 
 function handlerBreedSearch() {
   fetchBreeds()
-    .then(({ data }) => console.log(data))
+    .then(({ data }) => {
+      select.innerHTML = createSelectMarkup(data);
+    })
     .catch(err => console.log(err));
 }
 
-function fetchBreeds() {
-  const BASE_URL = 'https://api.thecatapi.com/v1';
-  const END_POINT = '/breeds';
+handlerBreedSearch();
 
-  return axios.get(`${BASE_URL}${END_POINT}`).then(response => {
-    return response;
-  });
+function createSelectMarkup(arr) {
+  return arr
+    .map(({ id, name }) => `<option value="${id}">${name}</option>`)
+    .join('');
 }
 
-handlerBreedSearch();
+select.addEventListener('change', handlerSelect);
+
+function handlerSelect(evt) {
+  fetchCatByBreed(evt.currentTarget.value)
+    .then(({ data }) => (info.innerHTML = createMarkup(data)))
+    .catch(err => console.log(err));
+}
+
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({ breeds, url }) => `
+        <img src="${url}" alt="${breeds.map(item => item.name)}"/>
+        <h2 class="name">${breeds.map(item => item.name)}</h2>
+        <div class="description">${breeds.map(item => item.description)}</div>
+        <div class="temperament"><span>Temperament: </span>${breeds.map(
+          item => item.temperament
+        )}</div>
+    `
+    )
+    .join('');
+}
