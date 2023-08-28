@@ -22,7 +22,7 @@ $mainColor: #00c7ac;
   .cat-info {
     margin-top: 40px;
     display: flex;
-    column-gap: 20px;
+    column-gap: 40px;
     flex-wrap: wrap;
 
     .image,
@@ -30,7 +30,7 @@ $mainColor: #00c7ac;
       width: 100%;
 
       @media only screen and (min-width: 1024px) {
-        width: 50%;
+        width: calc(50% - 20px);
       }
     }
 
