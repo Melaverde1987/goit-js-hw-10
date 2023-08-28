@@ -23,14 +23,20 @@ $mainColor: #00c7ac;
     margin-top: 40px;
     display: flex;
     column-gap: 20px;
+    flex-wrap: wrap;
 
     .image,
     .text {
-      width: 50%;
+      width: 100%;
+
+      @media only screen and (min-width: 1024px) {
+        width: 50%;
+      }
     }
 
     .image {
       max-width: 100%;
+      object-fit: cover;
     }
 
     .text {
