@@ -15,6 +15,7 @@ function handlerBreedSearch() {
   fetchBreeds()
     .then(({ data }) => {
       select.innerHTML = createSelectMarkup(data);
+      select.classList.remove('hidden');
       new SlimSelect({
         select: select,
         settings: {
@@ -23,7 +24,7 @@ function handlerBreedSearch() {
       });
     })
     .catch(err => {
-      Notify.failure(err.message);
+      Notify.failure('Oops! Something went wrong! Try reloading the page!');
     })
     .finally(() => {
       loader.classList.add('hidden');
@@ -49,7 +50,7 @@ function handlerSelect(evt) {
       info.innerHTML = createMarkup(data);
     })
     .catch(err => {
-      Notify.failure(err.message);
+      Notify.failure('Oops! Something went wrong! Try reloading the page!');
     })
     .finally(() => {
       loader.classList.add('hidden');

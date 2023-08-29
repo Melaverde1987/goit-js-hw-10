@@ -17,6 +17,10 @@ $mainColor: #00c7ac;
     width: 300px;
     margin: 0 auto;
     display: flex;
+
+    &.hidden {
+      display: none;
+    }
   }
 
   .cat-info {
